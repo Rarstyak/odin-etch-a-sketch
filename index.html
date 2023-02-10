@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Etch A Sketch</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="header-container">
+        <button class="new-sketch">New Sketch</button>
+    </div>
+    <div class="content-container">
+        <div class="sketch-board"></div>
+    </div>
+    <div class="footer-container">
+
+    </div>
+    <script>
+        const sketchBoard = document.querySelector('div.sketch-board');
+
+        let sketchHeight = 450;
+        let sketchWidth = 450;
+        let sketchGridSize = 16;
+
+        function newSketch(gridSize) {
+            sketchGridSize = gridSize;
+            // double loop on gridSize for creating and attatching rows of gridBoxes
+            for (let i = 0; i < gridSize; i++) {
+                // make row i
+                let sketchRow = document.createElement('div');
+                sketchRow.style.height = sketchHeight / sketchGridSize + 'px';
+                sketchRow.style.width = sketchWidth + 'px';
+                sketchBoard.appendChild(sketchRow);
+                for (let j = 0; j < gridSize; j++) {
+                    // make box and attatch to row i
+                    let sketchBox = document.createElement('div');
+                    sketchBox.style.display = 'inline-block';
+                    sketchBox.style.height = sketchHeight / sketchGridSize + 'px';
+                    sketchBox.style.width = sketchWidth / sketchGridSize + 'px';
+                    sketchRow.appendChild(sketchBox);
+                }
+            }
+        }
+
+        // Clear all function/Color reset via background reset not make new
+
+        newSketch(16);
+        // Button set up
+    </script>
+</body>
+</html>
