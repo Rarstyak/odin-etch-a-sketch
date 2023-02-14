@@ -17,13 +17,21 @@
     </div>
     <script>
         const sketchBoard = document.querySelector('div.sketch-board');
+        const mode = 'random'
 
-        let sketchHeight = 450;
-        let sketchWidth = 450;
+        let sketchHeight = 960;
+        let sketchWidth = 960;
         let sketchGridSize = 16;
 
         function newSketch(gridSize) {
-            sketchGridSize = gridSize;
+            // check if valid
+            if (Number.isInteger(gridSize) && gridSize > 0 && gridSize <= 100) {
+                sketchGridSize = gridSize;
+            } else {
+                alert(`Invalid input; using previous gridSize: ${gridSize}`);
+            }
+            // remove old
+            sketchBoard.textContent = '';
             // double loop on gridSize for creating and attatching rows of gridBoxes
             for (let i = 0; i < gridSize; i++) {
                 // make row i
@@ -37,15 +45,29 @@
                     sketchBox.style.display = 'inline-block';
                     sketchBox.style.height = sketchHeight / sketchGridSize + 'px';
                     sketchBox.style.width = sketchWidth / sketchGridSize + 'px';
+                    sketchBox.style.backgroundColor = 'hsl(0, 0%, 100%)';
+                    sketchBox.addEventListener('mouseover', sketchBoxColorChange);
                     sketchRow.appendChild(sketchBox);
                 }
             }
         }
 
-        // Clear all function/Color reset via background reset not make new
+        function sketchBoxColorChange(e) {
+            switch(mode) {
+                case 'black':
+                    e.target.style.backgroundColor = 'black';
+                    break;
+                case 'random':
+                    e.target.style.backgroundColor = `#${Math.floor(Math.random()*16777215).toString(16)}`;
+                    break;
+            }
+            
+        }
 
         newSketch(16);
         // Button set up
+        const btnNewSketch = document.querySelector('button.new-sketch');
+        btnNewSketch.addEventListener('click', () => newSketch(parseInt(prompt("What is the new Gridsize?\n Input an integer between 1-100."))));
     </script>
 </body>
 </html>
